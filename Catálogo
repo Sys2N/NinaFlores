@@ -1,0 +1,1855 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Meta tags para prevenir cache -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    
+    <!-- Meta tags para SEO que serão preenchidas dinamicamente -->
+    <meta name="description" content="" id="meta-description">
+    <meta name="keywords" content="" id="meta-keywords">
+    <meta name="author" content="Dante Testa">
+    
+    <!-- Meta tags para compartilhamento em redes sociais (Open Graph) -->
+    <meta property="og:title" content="" id="og-title">
+    <meta property="og:description" content="" id="og-description">
+    <meta property="og:image" content="" id="og-image">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="" id="og-url">
+    <meta property="og:type" content="website">
+    
+    <!-- Meta tags para Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="" id="twitter-title">
+    <meta name="twitter:description" content="" id="twitter-description">
+    <meta name="twitter:image" content="" id="twitter-image">
+    
+    <!-- Favicon (será preenchido dinamicamente) -->
+    <link rel="icon" href="" type="image/png">
+    
+    <title></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Variáveis CSS dinâmicas para cores da planilha */
+        :root {
+            --cor-primaria: #8B4513;
+            --cor-secundaria: #D2691E;
+            --cor-fundo: #f8fafc;
+            --cor-texto: #333333;
+            --cor-links: #8B4513;
+            --cor-texto-rodape: #ffffff;
+        }
+
+        /* Animações personalizadas */
+        .menu-transition {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .logo-hover {
+            transition: transform 0.2s ease-in-out;
+        }
+        
+        .logo-hover:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Smooth scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Loading animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        /* Gradientes dinâmicos */
+        .gradient-bg {
+            background: var(--cor-fundo);
+        }
+        
+        /* Cards com hover effect - Design atualizado */
+        .card-hover {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        /* Estilos para o novo design de cards */
+        .menu-item-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .menu-item-row {
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            height: 100%;
+        }
+        
+        .menu-item-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex-grow: 1;
+            min-width: 0; /* Para evitar overflow de texto */
+        }
+        
+        .menu-item-title-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .menu-item-image-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: 0.75rem;
+        }
+        
+        .menu-item-pill {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        /* Animação do preço */
+        .price-highlight {
+            transition: all 0.2s ease;
+        }
+        
+        .price-highlight:hover {
+            transform: scale(1.02);
+        }
+
+        /* Scroll horizontal estilo iFood com cores dinâmicas */
+        .category-scroll {
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        .category-scroll::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .category-item {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .category-item.active {
+            background-color: var(--cor-primaria) !important;
+            color: white !important;
+            /* Removido: sombra e efeitos de escala/translação */
+        }
+        
+        .category-item.centered-item {
+            position: relative;
+            /* Removida a posição relativa que era usada para a bolinha */
+        }
+
+        /* Removido o pseudo-elemento ::after que criava a bolinha */
+
+        /* Classes dinâmicas que usam as variáveis CSS */
+        .bg-primary-dynamic {
+            background-color: var(--cor-primaria) !important;
+        }
+
+        .text-primary-dynamic {
+            color: var(--cor-primaria) !important;
+        }
+
+        .border-primary-dynamic {
+            border-color: var(--cor-primaria) !important;
+        }
+
+        .bg-secondary-dynamic {
+            background-color: var(--cor-secundaria) !important;
+        }
+
+        .text-secondary-dynamic {
+            color: var(--cor-secundaria) !important;
+        }
+
+        .hover-primary-dynamic:hover {
+            background-color: var(--cor-primaria) !important;
+            color: white !important;
+        }
+        
+        /* Classes dinâmicas para texto e links */
+        .text-color-dynamic {
+            color: var(--cor-texto) !important;
+        }
+        
+        .link-color-dynamic {
+            color: var(--cor-links) !important;
+        }
+        
+        .link-color-dynamic:hover {
+            color: var(--cor-links) !important;
+            opacity: 0.8;
+        }
+        
+        /* Classe específica para texto do rodapé */
+        .text-rodape-dynamic {
+            color: var(--cor-texto-rodape) !important;
+        }
+
+        /* Estilos para o sistema de busca */
+        .search-overlay {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .search-container {
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .search-container.active {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .search-results {
+            max-height: 400px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+        }
+
+        .search-results::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .search-results::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        .search-results::-webkit-scrollbar-thumb {
+            background: var(--cor-primaria);
+            border-radius: 3px;
+        }
+
+        .search-item {
+            transition: all 0.2s ease;
+        }
+
+        .search-item:hover {
+            background-color: #f8f9fa;
+            transform: translateX(5px);
+        }
+
+        .highlight {
+            background-color: yellow;
+            font-weight: bold;
+        }
+
+        /* Animação do ícone de busca */
+        .search-icon {
+            transition: all 0.3s ease;
+        }
+
+        .search-icon:hover {
+            transform: scale(1.1);
+            color: var(--cor-primaria);
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen" onload="window.scrollTo(0, 0);">
+    <!-- Script para garantir que a página carregue no topo quando recarregada -->
+    <script>
+        // Verificar se há parâmetro scrollTop na URL
+        if (window.location.href.includes('scrollTop=0')) {
+            // Forçar rolagem para o topo
+            window.scrollTo(0, 0);
+            
+            // Remover o parâmetro da URL para não acumular parâmetros
+            const urlSemParam = window.location.href.replace(/[?&]scrollTop=0(&|$)/, '$1');
+            const urlLimpa = urlSemParam.endsWith('?') || urlSemParam.endsWith('&') 
+                ? urlSemParam.slice(0, -1) 
+                : urlSemParam;
+                
+            // Atualizar a URL sem recarregar a página
+            if (urlLimpa !== window.location.href) {
+                history.replaceState(null, '', urlLimpa);
+            }
+        }
+    </script>
+    <!-- Loading Screen -->
+    <div id="loading" class="fixed inset-0 bg-white flex items-center justify-center z-50">
+        <div class="text-center">
+            <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-primary-dynamic mx-auto mb-4"></div>
+            <p class="text-gray-600 text-lg">Carregando catálogo...</p>
+        </div>
+    </div>
+
+    <!-- Overlay de Busca -->
+    <div id="search-overlay" class="search-overlay fixed inset-0 z-50 hidden">
+        <div class="flex items-start justify-center min-h-screen pt-16 px-4">
+            <div id="search-container" class="search-container bg-white rounded-2xl shadow-2xl w-full max-w-2xl">
+                <!-- Header da Busca -->
+                <div class="flex items-center justify-between p-6 border-b border-gray-200">
+                    <h3 class="text-xl font-bold text-gray-800">🔍 Buscar no Catálogo</h3>
+                    <button id="close-search" class="p-2 hover:bg-gray-100 rounded-full transition-colors">
+                        <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Campo de Busca -->
+                <div class="p-6 border-b border-gray-200">
+                    <div class="relative">
+                        <input type="text" id="search-input" 
+                               placeholder="Digite o nome do produto, categoria ou descrição..."
+                               class="w-full px-4 py-3 pl-12 border-2 border-gray-300 rounded-xl focus:border-primary-dynamic focus:outline-none text-lg">
+                        <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2">Digite pelo menos 2 caracteres para buscar</p>
+                </div>
+
+                <!-- Resultados da Busca -->
+                <div id="search-results" class="search-results p-6">
+                    <div id="search-empty" class="text-center py-8">
+                        <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                        <p class="text-gray-500">Digite algo para buscar produtos do catálogo</p>
+                    </div>
+                    
+                    <div id="search-items" class="space-y-3 hidden">
+                        <!-- Resultados serão inseridos aqui -->
+                    </div>
+
+                    <div id="no-results" class="text-center py-8 hidden">
+                        <svg class="w-16 h-16 text-gray-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.137 0-4.146-.832-5.657-2.343"></path>
+                        </svg>
+                        <p class="text-gray-500">Nenhum produto encontrado</p>
+                        <p class="text-sm text-gray-400 mt-1">Tente usar termos diferentes</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cabeçalho Unificado - Header + Menu de Categorias como um único elemento fixo -->
+    <div id="unified-header" class="sticky top-0 z-40">
+        <!-- Header Principal -->
+        <header id="header" class="bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-100">
+            <div class="container mx-auto px-4 py-2">
+                <!-- Mobile: Logo centralizado com busca -->
+                <div class="md:hidden flex items-center justify-between">
+                    <div class="w-8"></div> <!-- Espaçador -->
+                    
+                    <div class="flex justify-center flex-1">
+                        <img id="logo-mobile" src="" alt="Logo" 
+                             class="w-3/4 sm:w-2/3 h-auto max-h-16 sm:max-h-20 object-contain logo-hover hidden rounded-lg">
+                        <div id="logo-text-mobile" class="w-12 h-12 bg-primary-dynamic rounded-full flex items-center justify-center text-white font-bold text-lg">
+                            
+                        </div>
+                    </div>
+                    
+                    <!-- Ícone de Busca Mobile -->
+                    <button id="search-btn-mobile" class="search-icon p-2 hover:bg-gray-100 rounded-full transition-colors">
+                        <svg class="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Desktop: Layout centralizado com busca -->
+                <div class="hidden md:flex items-center justify-between relative">
+                    <!-- Ícone de Busca Desktop (esquerda) -->
+                    <button id="search-btn-desktop" class="search-icon p-3 hover:bg-gray-100 rounded-full transition-colors absolute left-0">
+                        <svg class="w-7 h-7 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                    </button>
+                    
+                    <!-- Logo e nome centralizados -->
+                    <div class="flex items-center space-x-4 mx-auto">
+                        <img id="logo" src="" alt="Logo" 
+                             class="h-20 w-20 md:h-24 md:w-24 object-cover logo-hover hidden">
+                        <div class="flex flex-col">
+                            <h1 id="nome-empresa" class="text-2xl md:text-3xl font-bold text-primary-dynamic leading-tight">
+                                Carregando...
+                            </h1>
+                            <p id="slogan" class="text-sm md:text-base text-gray-600 hidden">
+                                Carregando...
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Espaço vazio à direita para balancear o layout -->
+                    <div class="w-[52px]"></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Menu de Categorias (parte do cabeçalho unificado) -->
+        <div id="mobile-category-menu" class="bg-white/95 backdrop-blur-sm border-b border-gray-100 py-3 shadow-md">
+            <div id="category-scroll" class="category-scroll flex overflow-x-auto px-4 space-x-3 min-h-[52px] items-center md:justify-center justify-start">
+                <!-- Categorias serão inseridas dinamicamente aqui -->
+                <!-- Placeholder para garantir que o menu tenha conteúdo mesmo antes do carregamento -->
+                <div class="flex-shrink-0 px-4 py-2 bg-gray-200 text-transparent rounded-full text-sm font-semibold whitespace-nowrap min-w-[80px] animate-pulse">Carregando...</div>
+                <div class="flex-shrink-0 px-4 py-2 bg-gray-200 text-transparent rounded-full text-sm font-semibold whitespace-nowrap min-w-[80px] animate-pulse">Carregando...</div>
+                <div class="flex-shrink-0 px-4 py-2 bg-gray-200 text-transparent rounded-full text-sm font-semibold whitespace-nowrap min-w-[80px] animate-pulse">Carregando...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 pt-28 pb-8">
+
+        <!-- Catálogo -->
+        <div id="cardapio" class="space-y-12">
+            <!-- Categorias serão inseridas aqui dinamicamente -->
+        </div>
+
+        <!-- Seção de Avaliação -->
+        <div id="avaliacao-section" class="mt-16 text-center" style="display: none;">
+            <div class="bg-white rounded-3xl p-8 shadow-xl max-w-2xl mx-auto fade-in">
+                <div class="mb-6">
+                    <div class="text-6xl mb-4">⭐</div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3">Gostou do nosso atendimento?</h3>
+                    <p class="text-gray-600 text-lg">Sua opinião é muito importante para nós!</p>
+                </div>
+                
+                <a id="btn-avaliar" href="#" target="_blank" style="display: none;"
+                   class="inline-flex items-center px-8 py-4 bg-primary-dynamic text-white rounded-2xl hover:shadow-lg transform hover:scale-105 transition-all duration-300 text-lg font-semibold">
+                    <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                    </svg>
+                    Avaliar no Google
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer id="footer-dynamic" class="text-white mt-20">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div id="footer-contato" class="text-center md:text-left">
+                    <h4 class="font-bold text-xl mb-4 flex items-center justify-center md:justify-start text-rodape-dynamic">
+                        <span class="text-2xl mr-2">📍</span> Contato
+                    </h4>
+                    <div class="space-y-3 text-sm md:text-base opacity-90">
+                        <p id="endereco">Carregando...</p>
+                        <p id="telefone">Carregando...</p>
+                        <p id="email">Carregando...</p>
+                    </div>
+                </div>
+                
+                <div id="footer-horario" class="text-center md:text-left">
+                    <h4 class="font-bold text-xl mb-4 flex items-center justify-center md:justify-start text-rodape-dynamic">
+                        <span class="text-2xl mr-2">🕒</span> Horário
+                    </h4>
+                    <div class="space-y-2 text-sm md:text-base opacity-90">
+                        <p id="horario-semana">Carregando...</p>
+                        <p id="horario-sabado">Carregando...</p>
+                        <p id="horario-domingo">Carregando...</p>
+                    </div>
+                </div>
+                
+                <div id="footer-redes" class="text-center md:text-left">
+                    <h4 class="font-bold text-xl mb-4 flex items-center justify-center md:justify-start text-rodape-dynamic">
+                        <span class="text-2xl mr-2">🌐</span> Redes Sociais
+                    </h4>
+                    <div class="flex justify-center md:justify-start space-x-4">
+                        <!-- Instagram -->
+                        <a id="link-instagram" href="#" class="p-3 bg-white/20 rounded-full hover:bg-white/30 transition-all transform hover:scale-110" style="display: none;">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.40z"/>
+                            </svg>
+                        </a>
+                        
+                        <!-- Facebook -->
+                        <a id="link-facebook" href="#" class="p-3 bg-white/20 rounded-full hover:bg-white/30 transition-all transform hover:scale-110" style="display: none;">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                        
+                        <!-- WhatsApp -->
+                        <a id="link-whatsapp" href="#" class="p-3 bg-white/20 rounded-full hover:bg-white/30 transition-all transform hover:scale-110" style="display: none;">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/20 mt-8 pt-8 text-center">
+                <p class="opacity-75 text-rodape-dynamic">&copy; 2024 <span id="footer-nome-empresa" class="text-rodape-dynamic">Cafeteria</span>. Todos os direitos reservados.</p>
+            </div>
+        </div>
+        
+        <!-- Bloco de Créditos com design discreto -->
+        <div class="bg-gray-50 border-t border-gray-200 py-3">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-wrap items-center justify-center text-xs text-gray-400">
+                    
+                    <!-- Nome do desenvolvedor com link para o site -->
+                    <a href="https://www.sys2n.com.br" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-gray-600 transition-colors">
+                        <span>Desenvolvido por <strong>Sys2N_Sistemas Personalizados</strong></span>
+                    </a>
+                    
+                    <!-- Separador -->
+                    <span class="mx-2">•</span>
+                    
+                    <!-- WhatsApp apenas como ícone -->
+                    <a href="https://wa.me/5547989159449" target="_blank" rel="noopener noreferrer"
+                       class="text-gray-500 hover:text-gray-600 transition-colors" aria-label="Entre em contato pelo WhatsApp">
+                        <svg class="w-4 h-4 inline" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M17.415 14.382c-.298-.149-1.759-.867-2.03-.967-.272-.099-.47-.148-.67.15-.198.296-.767.966-.94 1.164-.174.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.019-.458.13-.606.134-.133.297-.347.446-.52.148-.174.198-.298.297-.497.1-.198.05-.371-.025-.52-.075-.149-.668-1.612-.916-2.207-.242-.579-.487-.5-.668-.51-.172-.01-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.872.118.57-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.422 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.885 3.488"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- SETUP DAS URLS DA PLANILHA -->
+    <script>
+// URLs das planilhas
+const URLS = {
+    categorias: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4qCM65DfsW1TV4t2_ZW2iBRyTdtKHClxxeuiwk-OxP9z1osgUtYQOx2leOsGTZ1-yPxnKvERk7bYF/pub?gid=735073220&single=true&output=csv',
+    itens: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4qCM65DfsW1TV4t2_ZW2iBRyTdtKHClxxeuiwk-OxP9z1osgUtYQOx2leOsGTZ1-yPxnKvERk7bYF/pub?gid=0&single=true&output=csv',
+    config: 'https://docs.google.com/spreadsheets/d/e/2PACX-1vS4qCM65DfsW1TV4t2_ZW2iBRyTdtKHClxxeuiwk-OxP9z1osgUtYQOx2leOsGTZ1-yPxnKvERk7bYF/pub?gid=107853974&single=true&output=csv'
+};
+
+let dadosGlobais = {
+    categorias: [],
+    itens: [],
+    config: {}
+};
+
+// Variáveis para o sistema de busca
+let todosItens = [];
+let searchTimeout;
+
+        // Função utilitária para normalizar URLs de imagens, incluindo links de compartilhamento do Google Drive
+        // Função removida conforme solicitado
+
+
+// Função para converter CSV em array de objetos
+function csvToArray(csv) {
+    const lines = csv.trim().split('\n');
+    if (lines.length < 2) return [];
+    
+    const headers = lines[0].split(',').map(h => h.replace(/"/g, '').trim());
+    
+    return lines.slice(1).map(line => {
+        const values = [];
+        let current = '';
+        let inQuotes = false;
+        
+        for (let i = 0; i < line.length; i++) {
+            const char = line[i];
+            if (char === '"') {
+                inQuotes = !inQuotes;
+            } else if (char === ',' && !inQuotes) {
+                values.push(current.trim());
+                current = '';
+            } else {
+                current += char;
+            }
+        }
+        values.push(current.trim());
+        
+        const obj = {};
+        headers.forEach((header, index) => {
+            obj[header] = values[index] ? values[index].replace(/"/g, '') : '';
+        });
+        return obj;
+    }).filter(obj => Object.values(obj).some(val => val !== ''));
+}
+
+// Função para aplicar cores dinâmicas da planilha
+function aplicarCoresDinamicas(config) {
+    const root = document.documentElement;
+    
+    if (config['Cor Primária']) {
+        root.style.setProperty('--cor-primaria', config['Cor Primária']);
+    }
+    
+    if (config['Cor Secundária']) {
+        root.style.setProperty('--cor-secundaria', config['Cor Secundária']);
+    }
+    
+    if (config['Cor de Fundo']) {
+        root.style.setProperty('--cor-fundo', config['Cor de Fundo']);
+        document.body.style.backgroundColor = config['Cor de Fundo'];
+    }
+    
+    // Aplicar cor do texto
+    if (config['Cor do Texto']) {
+        // Definir variável CSS
+        root.style.setProperty('--cor-texto', config['Cor do Texto']);
+        
+        // Aplicar a cor diretamente aos elementos de texto principais
+        document.querySelectorAll('.descricao-item, .nome-item, p:not(.text-primary-dynamic):not(.text-secondary-dynamic):not(.text-white):not(.link-color-dynamic):not(.text-rodape-dynamic)').forEach(el => {
+            el.classList.add('text-color-dynamic');
+        });
+        
+        // Aplicar ao texto do cabeçalho que não tem cores específicas
+        document.querySelectorAll('#slogan').forEach(el => {
+            el.classList.add('text-color-dynamic');
+        });
+    }
+    
+    // Aplicar cor do texto do rodapé
+    if (config['Cor do Texto Rodapé']) {
+        // Definir variável CSS
+        root.style.setProperty('--cor-texto-rodape', config['Cor do Texto Rodapé']);
+        
+        // Aplicar a cor aos elementos de texto do rodapé
+        document.querySelectorAll('#footer-dynamic p, #footer-dynamic .text-sm, #footer-dynamic .text-xs').forEach(el => {
+            el.classList.remove('text-color-dynamic'); // Remover classe de cor de texto geral se existir
+            el.classList.add('text-rodape-dynamic');
+        });
+    }
+    
+    // Aplicar cor dos links
+    if (config['Cor dos Links']) {
+        // Definir variável CSS
+        root.style.setProperty('--cor-links', config['Cor dos Links']);
+        
+        // Aplicar a cor diretamente aos links que não têm outras classes de cor
+        // e que não estão no rodapé de créditos
+        document.querySelectorAll('a:not(.bg-primary-dynamic):not(.text-white):not(.text-primary-dynamic):not(.text-secondary-dynamic):not(.text-gray-500)').forEach(el => {
+            // Verificar se o link não está no rodapé de créditos
+            if (!el.closest('.bg-gray-50')) {
+                el.classList.add('link-color-dynamic');
+            }
+        });
+    }
+
+    const footer = document.getElementById('footer-dynamic');
+    if (config['Cor Primária'] && config['Cor Secundária']) {
+        footer.style.background = `linear-gradient(135deg, ${config['Cor Primária']} 0%, ${config['Cor Secundária']} 100%)`;
+    }
+
+    console.log('Cores aplicadas dinamicamente:', {
+        primaria: config['Cor Primária'],
+        secundaria: config['Cor Secundária'],
+        fundo: config['Cor de Fundo'],
+        texto: config['Cor do Texto'],
+        textoRodape: config['Cor do Texto Rodapé'],
+        links: config['Cor dos Links']
+    });
+}
+
+// Função para carregar dados das planilhas
+async function carregarDados() {
+    try {
+        console.log('Carregando dados das planilhas...');
+        
+        const [categoriasRes, itensRes, configRes] = await Promise.all([
+            fetch(URLS.categorias),
+            fetch(URLS.itens),
+            fetch(URLS.config)
+        ]);
+
+        const [categoriasCsv, itensCsv, configCsv] = await Promise.all([
+            categoriasRes.text(),
+            itensRes.text(),
+            configRes.text()
+        ]);
+
+        dadosGlobais.categorias = csvToArray(categoriasCsv);
+        dadosGlobais.itens = csvToArray(itensCsv);
+        
+        // Debug: Verificar a estrutura dos dados da categoria
+        if (dadosGlobais.categorias && dadosGlobais.categorias.length > 0) {
+            console.log('Estrutura da primeira categoria:', dadosGlobais.categorias[0]);
+            console.log('Todas as chaves disponíveis:', Object.keys(dadosGlobais.categorias[0]));
+        }
+        
+        const configArray = csvToArray(configCsv);
+        dadosGlobais.config = {};
+        configArray.forEach(item => {
+            if (item.Campo && item.Valor) {
+                dadosGlobais.config[item.Campo] = item.Valor;
+            }
+        });
+
+        // Preparar dados para busca
+        prepararDadosBusca();
+
+        aplicarCoresDinamicas(dadosGlobais.config);
+        aplicarConfiguracoes();
+        renderizarCardapio();
+        
+    } catch (error) {
+        console.error('Erro ao carregar dados:', error);
+        document.getElementById('loading').innerHTML = 
+            '<div class="text-center"><p class="text-red-600 text-xl">Erro ao carregar cardápio. Verifique sua conexão.</p></div>';
+    }
+}
+
+// Função para preparar dados para busca
+function prepararDadosBusca() {
+    todosItens = dadosGlobais.itens.filter(item => item.Disponível === 'Sim').map(item => {
+        // Encontrar categoria do item
+        const categoria = dadosGlobais.categorias.find(cat => cat.Nome_Categoria === item.Categoria);
+        
+        return {
+            ...item,
+            categoriaTitulo: categoria ? categoria.Título_Exibição : item.Categoria,
+            searchText: `${item.Item} ${item.Descrição} ${item.Categoria} ${categoria ? categoria.Título_Exibição : ''} ${item.Classificação_Adicional || ''}`.toLowerCase()
+        };
+    });
+    console.log('Dados preparados para busca:', todosItens.length, 'itens');
+}
+
+// Função de busca
+function realizarBusca(termo) {
+    if (!termo || termo.length < 2) {
+        mostrarEstadoVazio();
+        return;
+    }
+
+    const termoLower = termo.toLowerCase();
+    const resultados = todosItens.filter(item => 
+        item.searchText.includes(termoLower)
+    );
+
+    if (resultados.length === 0) {
+        mostrarSemResultados();
+    } else {
+        mostrarResultados(resultados, termo);
+    }
+}
+
+// Função para destacar texto
+function destacarTexto(texto, termo) {
+    if (!termo || termo.length < 2) return texto;
+    
+    const regex = new RegExp(`(${termo})`, 'gi');
+    return texto.replace(regex, '<span class="highlight">$1</span>');
+}
+
+// Função para mostrar resultados
+function mostrarResultados(resultados, termo) {
+    const searchEmpty = document.getElementById('search-empty');
+    const searchItems = document.getElementById('search-items');
+    const noResults = document.getElementById('no-results');
+
+    searchEmpty.classList.add('hidden');
+    noResults.classList.add('hidden');
+    searchItems.classList.remove('hidden');
+
+    searchItems.innerHTML = resultados.map(item => `
+        <div class="search-item p-4 border border-gray-200 rounded-xl cursor-pointer" onclick="irParaItem('${item.Categoria}', '${item.Item}')">
+            <div class="flex items-start space-x-4">
+                ${item.Foto_URL ? `
+                    <img src="${item.Foto_URL}" alt="${item.Item}" class="w-16 h-16 object-cover rounded-lg flex-shrink-0">
+                ` : `
+                    <div class="w-16 h-16 bg-gray-200 rounded-lg flex-shrink-0 flex items-center justify-center">
+                        <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                `}
+                <div class="flex-1 min-w-0">
+                    <h4 class="font-semibold text-gray-900 mb-1">${destacarTexto(item.Item, termo)}</h4>
+                    <p class="text-sm text-gray-600 mb-2">${destacarTexto(item.Descrição || '', termo)}</p>
+                    <!-- Layout melhorado para mobile: categoria e preço em linhas separadas -->
+                    <div class="flex flex-col space-y-2">
+                        <div class="w-full overflow-hidden">
+                            <span class="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full inline-block truncate max-w-full">${item.categoriaTitulo}</span>
+                        </div>
+                        <div class="w-full flex justify-between items-center">
+                            <span class="font-bold text-primary-dynamic text-right w-full">${item.Preço || 'Consulte'}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+}
+
+// Função para mostrar estado vazio
+function mostrarEstadoVazio() {
+    const searchEmpty = document.getElementById('search-empty');
+    const searchItems = document.getElementById('search-items');
+    const noResults = document.getElementById('no-results');
+
+    searchEmpty.classList.remove('hidden');
+    searchItems.classList.add('hidden');
+    noResults.classList.add('hidden');
+}
+
+// Função para mostrar sem resultados
+function mostrarSemResultados() {
+    const searchEmpty = document.getElementById('search-empty');
+    const searchItems = document.getElementById('search-items');
+    const noResults = document.getElementById('no-results');
+
+    searchEmpty.classList.add('hidden');
+    searchItems.classList.add('hidden');
+    noResults.classList.remove('hidden');
+}
+
+// Função para ir para item específico
+function irParaItem(categoria, nomeItem) {
+    // Fechar busca
+    fecharBusca();
+    
+    // Filtrar por categoria
+    filtrarPorCategoria(categoria);
+    
+    // Scroll para o item específico
+    setTimeout(() => {
+        const elementos = document.querySelectorAll('.menu-item h3');
+        for (let elemento of elementos) {
+            if (elemento.textContent.trim() === nomeItem) {
+                elemento.closest('.menu-item').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+                
+                // Destacar temporariamente o item
+                const card = elemento.closest('.menu-item');
+                card.style.boxShadow = '0 0 0 3px var(--cor-primaria)';
+                card.style.transition = 'box-shadow 0.3s ease';
+                
+                setTimeout(() => {
+                    card.style.boxShadow = '';
+                }, 2000);
+                break;
+            }
+        }
+    }, 300);
+}
+
+// Funções para controlar a busca
+function abrirBusca() {
+    const overlay = document.getElementById('search-overlay');
+    const container = document.getElementById('search-container');
+    const input = document.getElementById('search-input');
+    
+    overlay.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    
+    setTimeout(() => {
+        container.classList.add('active');
+        input.focus();
+    }, 50);
+}
+
+function fecharBusca() {
+    const overlay = document.getElementById('search-overlay');
+    const container = document.getElementById('search-container');
+    const input = document.getElementById('search-input');
+    
+    container.classList.remove('active');
+    document.body.style.overflow = '';
+    
+    setTimeout(() => {
+        overlay.classList.add('hidden');
+        input.value = '';
+        mostrarEstadoVazio();
+    }, 300);
+}
+
+// Aplicar configurações do site
+function aplicarConfiguracoes() {
+    const config = dadosGlobais.config;
+    
+    // Título e identificação básica
+    document.title = config['Título da Página'] || 'Cardápio Online';
+    document.getElementById('nome-empresa').textContent = config['Nome da Empresa'] || 'Cafeteria';
+    
+    // Nome da empresa no rodapé
+    const nomeEmpresaElement = document.getElementById('footer-nome-empresa');
+    const nomeEmpresa = config['Nome da Empresa'] || 'Cafeteria';
+    nomeEmpresaElement.textContent = nomeEmpresa;
+    nomeEmpresaElement.classList.add('text-rodape-dynamic');
+    nomeEmpresaElement.classList.remove('text-color-dynamic');
+    
+    // Preencher as iniciais do nome da empresa no logo de texto mobile
+    const logoTextMobile = document.getElementById('logo-text-mobile');
+    if (logoTextMobile) {
+        // Extrair as iniciais do nome da empresa (até 2 caracteres)
+        const palavras = nomeEmpresa.split(' ');
+        let iniciais = '';
+        
+        // Pegar a primeira letra de cada palavra, até 2 letras
+        for (let i = 0; i < Math.min(2, palavras.length); i++) {
+            if (palavras[i].length > 0) {
+                iniciais += palavras[i][0].toUpperCase();
+            }
+        }
+        
+        // Se só tiver uma palavra, usar as duas primeiras letras
+        if (iniciais.length === 1 && nomeEmpresa.length > 1) {
+            iniciais += nomeEmpresa[1].toUpperCase();
+        }
+        
+        logoTextMobile.textContent = iniciais;
+    }
+    
+    // Configurações de SEO - usando os IDs para garantir que as meta tags sejam preenchidas corretamente
+    // Descrição
+    if (config['Descrição SEO']) {
+        document.getElementById('meta-description').setAttribute('content', config['Descrição SEO']);
+        document.getElementById('og-description').setAttribute('content', config['Descrição SEO']);
+        document.getElementById('twitter-description').setAttribute('content', config['Descrição SEO']);
+    } else {
+        const descricaoPadrao = `Cardápio online de ${config['Nome da Empresa'] || 'Cafeteria'}`;
+        document.getElementById('meta-description').setAttribute('content', descricaoPadrao);
+        document.getElementById('og-description').setAttribute('content', descricaoPadrao);
+        document.getElementById('twitter-description').setAttribute('content', descricaoPadrao);
+    }
+    
+    // Palavras-chave
+    if (config['Palavras-chave']) {
+        document.getElementById('meta-keywords').setAttribute('content', config['Palavras-chave']);
+    } else {
+        document.getElementById('meta-keywords').setAttribute('content', 'cardápio, comida, restaurante');
+    }
+    
+    // Idioma
+    if (config['Idioma']) {
+        document.documentElement.lang = config['Idioma'];
+    }
+    
+    // Título para compartilhamento
+    const tituloPagina = config['Título da Página'] || 'Cardápio Online';
+    document.getElementById('og-title').setAttribute('content', tituloPagina);
+    document.getElementById('twitter-title').setAttribute('content', tituloPagina);
+    
+    // URL e imagem para compartilhamento
+    const urlAtual = window.location.href;
+    document.getElementById('og-url').setAttribute('content', urlAtual);
+    
+    // Imagem para compartilhamento (se existir na configuração)
+    if (config['Imagem Social URL']) {
+        // Processar URL para suportar Dropbox e outras fontes externas
+        const imagemSocialProcessada = processarURLImagem(config['Imagem Social URL']);
+        document.getElementById('og-image').setAttribute('content', imagemSocialProcessada);
+        document.getElementById('twitter-image').setAttribute('content', imagemSocialProcessada);
+    } else {
+        // URL padrão para imagem social
+        const imagemPadrao = 'https://dantetesta.com.br/cardapio/social.jpg';
+        document.getElementById('og-image').setAttribute('content', imagemPadrao);
+        document.getElementById('twitter-image').setAttribute('content', imagemPadrao);
+    }
+    
+    // Configurar favicon
+    if (config['Favicon URL']) {
+        document.querySelector('link[rel="icon"]').setAttribute('href', processarURLImagem(config['Favicon URL']));
+    }
+    
+    // Configurar imagem para compartilhamento social
+    if (config['Social Image']) {
+        document.querySelector('meta[property="og:image"]').setAttribute('content', config['Social Image']);
+        document.querySelector('meta[name="twitter:image"]').setAttribute('content', config['Social Image']);
+        console.log('Imagem social configurada:', config['Social Image']);
+    }
+    
+    const sloganElement = document.getElementById('slogan');
+    if (config['Slogan']) {
+        sloganElement.textContent = config['Slogan'];
+        sloganElement.classList.remove('hidden');
+    }
+    
+    // Logo para desktop
+    if (config['Logo URL']) {
+        const logo = document.getElementById('logo');
+        logo.src = processarURLImagem(config['Logo URL']); // Processar URL para suportar Dropbox
+        logo.classList.remove('hidden');
+    }
+
+    // Logo para mobile
+    if (config['Logo Mobile URL']) {
+        const logoMobile = document.getElementById('logo-mobile');
+        logoMobile.src = processarURLImagem(config['Logo Mobile URL']); // Processar URL para suportar Dropbox
+        logoMobile.classList.remove('hidden');
+        logoMobile.classList.remove('rounded-full');
+        logoMobile.classList.add('w-3/4', 'h-auto', 'max-h-16', 'object-contain', 'rounded-lg');
+        document.getElementById('logo-text-mobile').style.display = 'none';
+    } else if (config['Logo URL']) {
+        const logoMobile = document.getElementById('logo-mobile');
+        logoMobile.src = processarURLImagem(config['Logo URL']); // Processar URL para suportar Dropbox
+        logoMobile.classList.remove('hidden');
+        logoMobile.classList.add('w-3/4', 'h-auto', 'max-h-16', 'object-contain', 'rounded-lg');
+        document.getElementById('logo-text-mobile').style.display = 'none';
+    }
+
+    // Informações de contato - ocultar seção inteira se não houver dados
+    const temContato = config['Endereço Completo'] || config['Telefone'] || config['Email'];
+    
+    if (temContato) {
+        document.getElementById('footer-contato').style.display = 'block';
+        
+        // Mostrar ou ocultar cada campo individualmente
+        if (config['Endereço Completo']) {
+            document.getElementById('endereco').textContent = config['Endereço Completo'];
+            document.getElementById('endereco').style.display = 'block';
+            document.getElementById('endereco').classList.add('text-rodape-dynamic');
+            document.getElementById('endereco').classList.remove('text-color-dynamic');
+        } else {
+            document.getElementById('endereco').style.display = 'none';
+        }
+        
+        if (config['Telefone']) {
+            document.getElementById('telefone').textContent = config['Telefone'];
+            document.getElementById('telefone').style.display = 'block';
+            document.getElementById('telefone').classList.add('text-rodape-dynamic');
+            document.getElementById('telefone').classList.remove('text-color-dynamic');
+        } else {
+            document.getElementById('telefone').style.display = 'none';
+        }
+        
+        if (config['Email']) {
+            document.getElementById('email').textContent = config['Email'];
+            document.getElementById('email').style.display = 'block';
+            document.getElementById('email').classList.add('text-rodape-dynamic');
+            document.getElementById('email').classList.remove('text-color-dynamic');
+        } else {
+            document.getElementById('email').style.display = 'none';
+        }
+    } else {
+        // Ocultar toda a seção de contato
+        document.getElementById('footer-contato').style.display = 'none';
+    }
+    
+    // Horários - ocultar seção inteira se não houver dados
+    const temHorarios = config['Segunda a Sexta'] || config['Sábado'] || config['Domingo'];
+    
+    if (temHorarios) {
+        document.getElementById('footer-horario').style.display = 'block';
+        
+        // Mostrar ou ocultar cada campo individualmente
+        if (config['Segunda a Sexta']) {
+            document.getElementById('horario-semana').textContent = `Seg-Sex: ${config['Segunda a Sexta']}`;
+            document.getElementById('horario-semana').style.display = 'block';
+            document.getElementById('horario-semana').classList.add('text-rodape-dynamic');
+            document.getElementById('horario-semana').classList.remove('text-color-dynamic');
+        } else {
+            document.getElementById('horario-semana').style.display = 'none';
+        }
+        
+        if (config['Sábado']) {
+            document.getElementById('horario-sabado').textContent = `Sábado: ${config['Sábado']}`;
+            document.getElementById('horario-sabado').style.display = 'block';
+            document.getElementById('horario-sabado').classList.add('text-rodape-dynamic');
+            document.getElementById('horario-sabado').classList.remove('text-color-dynamic');
+        } else {
+            document.getElementById('horario-sabado').style.display = 'none';
+        }
+        
+        if (config['Domingo']) {
+            document.getElementById('horario-domingo').textContent = `Domingo: ${config['Domingo']}`;
+            document.getElementById('horario-domingo').style.display = 'block';
+            document.getElementById('horario-domingo').classList.add('text-rodape-dynamic');
+            document.getElementById('horario-domingo').classList.remove('text-color-dynamic');
+        } else {
+            document.getElementById('horario-domingo').style.display = 'none';
+        }
+    } else {
+        // Ocultar toda a seção de horários
+        document.getElementById('footer-horario').style.display = 'none';
+    }
+
+    // Links sociais dinâmicos baseados na planilha - ocultar seção inteira se não houver dados
+    const linkInstagram = document.getElementById('link-instagram');
+    const linkFacebook = document.getElementById('link-facebook');
+    const linkWhatsapp = document.getElementById('link-whatsapp');
+    
+    const temRedesSociais = config['Instagram URL'] || config['Facebook URL'] || config['WhatsApp'];
+    
+    if (temRedesSociais) {
+        document.getElementById('footer-redes').style.display = 'block';
+        
+        // Mostrar ou ocultar cada rede social individualmente
+        if (config['Instagram URL']) {
+            linkInstagram.href = config['Instagram URL'];
+            linkInstagram.style.display = 'block';
+        } else {
+            linkInstagram.style.display = 'none';
+        }
+
+        if (config['Facebook URL']) {
+            linkFacebook.href = config['Facebook URL'];
+            linkFacebook.style.display = 'block';
+        } else {
+            linkFacebook.style.display = 'none';
+        }
+
+        if (config['WhatsApp']) {
+            const whatsapp = config['WhatsApp'].replace(/\D/g, '');
+            linkWhatsapp.href = `https://wa.me/${whatsapp}`;
+            linkWhatsapp.style.display = 'block';
+        } else {
+            linkWhatsapp.style.display = 'none';
+        }
+    } else {
+        // Ocultar toda a seção de redes sociais
+        document.getElementById('footer-redes').style.display = 'none';
+    }
+
+    // Configuração do Google Meu Negócio - ocultar seção inteira se não houver URL
+    if (config['Google Meu Negócio URL']) {
+        document.getElementById('avaliacao-section').style.display = 'block';
+        document.getElementById('btn-avaliar').href = config['Google Meu Negócio URL'];
+        document.getElementById('btn-avaliar').style.display = 'inline-flex';
+    } else {
+        document.getElementById('avaliacao-section').style.display = 'none';
+    }
+
+    if (config['Moeda']) {
+        window.moedaSite = config['Moeda'];
+    }
+
+    console.log('Configurações aplicadas:', config);
+}
+
+// Função para processar URLs de imagens (Dropbox e outras fontes)
+function processarURLImagem(url) {
+    if (!url) return '';
+    
+    // Converter URLs do Dropbox para formato raw
+    if (url.includes('dropbox.com') && !url.includes('raw=1')) {
+        // Se já tem parâmetros na URL, adiciona &raw=1, senão adiciona ?raw=1
+        return url.includes('?') ? `${url}&raw=1` : `${url}?raw=1`;
+    }
+    
+    return url; // Retorna a URL original para outras fontes
+}
+
+// Função para aplicar cores aos elementos criados dinamicamente
+function aplicarCoresDinamicasAosElementos(elemento) {
+    // Aplicar cor de texto aos elementos de texto
+    const elementosTexto = elemento.querySelectorAll('.descricao-item, .nome-item, p:not(.text-primary-dynamic):not(.text-secondary-dynamic):not(.text-white):not(.link-color-dynamic):not(.text-rodape-dynamic)');
+    elementosTexto.forEach(el => {
+        el.classList.add('text-color-dynamic');
+    });
+    
+    // Aplicar cor de texto do rodapé aos elementos do rodapé
+    if (elemento.closest('#footer-dynamic')) {
+        const elementosTextoRodape = elemento.querySelectorAll('p, .text-sm, .text-xs');
+        elementosTextoRodape.forEach(el => {
+            el.classList.remove('text-color-dynamic'); // Remover classe de cor de texto geral se existir
+            el.classList.add('text-rodape-dynamic');
+        });
+    }
+    
+    // Aplicar cor de links aos links (exceto os do rodapé de créditos)
+    const elementosLinks = elemento.querySelectorAll('a:not(.bg-primary-dynamic):not(.text-white):not(.text-primary-dynamic):not(.text-secondary-dynamic):not(.text-gray-500)');
+    elementosLinks.forEach(el => {
+        // Verificar se o link não está no rodapé de créditos
+        if (!el.closest('.bg-gray-50')) {
+            el.classList.add('link-color-dynamic');
+        }
+    });
+}
+
+// Renderizar cardápio
+function renderizarCardapio() {
+    console.log('Iniciando renderização do cardápio...');
+    
+    const cardapioContainer = document.getElementById('cardapio');
+    const categoryScrollMobile = document.getElementById('category-scroll');
+    
+    // Limpar containers
+    cardapioContainer.innerHTML = '';
+    categoryScrollMobile.innerHTML = ''; // Remove os placeholders de carregamento
+    
+    const categoriasAtivas = dadosGlobais.categorias
+        .filter(cat => cat.Ativa === 'Sim')
+        .sort((a, b) => parseInt(a.Ordem_Exibição || 0) - parseInt(b.Ordem_Exibição || 0));
+
+    if (categoriasAtivas.length === 0) {
+        cardapioContainer.innerHTML = '<div class="text-center text-gray-600 text-xl">Nenhuma categoria encontrada</div>';
+        document.getElementById('loading').style.display = 'none';
+        return;
+    }
+
+    // Criar botão "Todos" para mobile (transformado em link âncora)
+    const btnTodosMobile = document.createElement('a');
+    btnTodosMobile.className = 'category-item active flex-shrink-0 px-4 py-2 bg-primary-dynamic text-white rounded-full text-sm font-semibold whitespace-nowrap min-w-[80px] text-center';
+    btnTodosMobile.textContent = '✨ Todos';
+    btnTodosMobile.dataset.categoria = '';
+    btnTodosMobile.setAttribute('data-target', 'categoria-todos');
+    btnTodosMobile.href = '#categoria-todos';
+    btnTodosMobile.style.textDecoration = 'none';
+    categoryScrollMobile.appendChild(btnTodosMobile);
+
+    // Criar filtros para todas as plataformas
+    categoriasAtivas.forEach(categoria => {
+        // Filtro scroll horizontal (transformado em link âncora)
+        const btnMobile = document.createElement('a');
+        btnMobile.className = 'category-item flex-shrink-0 px-4 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-semibold whitespace-nowrap hover-primary-dynamic transition-all min-w-[80px] text-center';
+        btnMobile.textContent = categoria.Título_Exibição || categoria.Nome_Categoria;
+        btnMobile.dataset.categoria = categoria.Nome_Categoria;
+        const targetId = `categoria-${categoria.Nome_Categoria.toLowerCase().replace(/\s+/g, '-')}`;
+        btnMobile.setAttribute('data-target', targetId);
+        btnMobile.href = `#${targetId}`;
+        btnMobile.style.textDecoration = 'none';
+        categoryScrollMobile.appendChild(btnMobile);
+    });
+
+    // Adicionar a seção "Todos" com ID para âncora
+    const todosSection = document.createElement('section');
+    todosSection.id = 'categoria-todos';
+    todosSection.className = 'categoria-secao fade-in';
+    todosSection.innerHTML = `
+        <div class="mb-8 pt-[30px]">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl md:text-4xl font-bold text-primary-dynamic mb-4">✨ Todos os Produtos</h2>
+                <p class="text-gray-600 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
+                    Veja todos os nossos produtos disponíveis
+                </p>
+            </div>
+        </div>
+    `;
+    cardapioContainer.appendChild(todosSection);
+
+    // Aplicar cores dinâmicas ao elemento "Todos os Produtos"
+    aplicarCoresDinamicasAosElementos(todosSection);
+    
+    // Renderizar seções de categoria
+    categoriasAtivas.forEach(categoria => {
+        const itensCategoria = dadosGlobais.itens.filter(item => {
+            // Verifica se o item está disponível
+            const disponivel = item.Disponível ? item.Disponível.trim() : '';
+            if (disponivel !== 'Sim') return false;
+            
+            // Processa categoria do filtro atual
+            const categoriaFiltro = categoria.Nome_Categoria ? categoria.Nome_Categoria.trim() : '';
+            
+            // Processa categorias do item (pode conter múltiplas categorias separadas por vírgula)
+            const categoriaItem = item.Categoria ? item.Categoria.trim() : '';
+            
+            // Se o item não tem categoria, não mostrar em nenhuma categoria
+            if (!categoriaItem) return false;
+            
+            // Divide as categorias do item em um array, removendo espaços extras
+            const categoriasDoItem = categoriaItem.split(',').map(cat => cat.trim());
+            
+            // Verifica se a categoria atual está entre as categorias do item
+            return categoriasDoItem.includes(categoriaFiltro);
+        });
+
+        if (itensCategoria.length === 0) return;
+
+        // Verificar e logar informações sobre a categoria e sua imagem para depuração
+        console.log('Renderizando categoria:', categoria.Nome_Categoria);
+        console.log('Campos disponíveis na categoria:', Object.keys(categoria));
+        
+        // Com base na planilha compartilhada, vamos tentar todos os possíveis campos para URL da imagem
+        // O campo correto é 'E' na planilha que pode ser mapeado para diferentes nomes
+        const imagemURLOriginal = categoria.E || categoria.Foto_URL || categoria.Foto_Categoria || categoria.Imagem || '';
+        // Processar URL para suportar Dropbox e outras fontes externas
+        const imagemURL = processarURLImagem(imagemURLOriginal);
+        
+        // Criar ID da seção para a âncora de navegação
+        const targetId = `categoria-${categoria.Nome_Categoria.toLowerCase().replace(/\s+/g, '-')}`;
+        
+        const secaoHtml = `
+            <section id="${targetId}" class="categoria-secao fade-in" data-categoria="${categoria.Nome_Categoria}">
+                <div class="mb-8 pt-[30px]">
+                    ${imagemURL ? `
+                        <img src="${imagemURL}" alt="${categoria.Título_Exibição}" 
+                             class="w-full h-40 md:h-56 object-cover rounded-3xl mb-6 shadow-lg">
+                    ` : ''}
+                    <div class="text-center mb-8">
+                        <h2 class="text-3xl md:text-4xl font-bold text-primary-dynamic mb-4">
+                            ${categoria.Título_Exibição || categoria.Nome_Categoria}
+                        </h2>
+                        <p class="text-gray-600 text-lg md:text-xl max-w-3xl mx-auto leading-relaxed">
+                            ${categoria.Descrição_Seção || ''}
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Grid ajustado: 1 coluna no mobile, 2 colunas no desktop -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    ${itensCategoria.map(item => `
+                        <div class="menu-item bg-white rounded-2xl shadow-lg overflow-hidden card-hover">
+                            <div class="menu-item-container h-full">
+                                <!-- Layout adaptativo: vertical no mobile, horizontal em telas maiores -->
+                                <div class="${item.Foto_URL ? 'flex flex-col md:flex-row' : ''}">
+                                    ${item.Foto_URL ? `
+                                    <div class="menu-item-image-wrapper w-full md:w-2/5">
+                                        <img src="${processarURLImagem(item.Foto_URL)}" alt="${item.Item}" 
+                                             class="w-full h-48 md:h-full object-cover aspect-square">
+                                    </div>
+                                    ` : ''}
+                                    
+                                    <div class="menu-item-content p-4 w-full md:${item.Foto_URL ? 'w-3/5' : 'w-full'}">
+                                        <div>
+                                            <div class="menu-item-title-price mb-3">
+                                                <h3 class="font-bold text-lg text-gray-800 leading-tight truncate">
+                                                    ${item.Item || 'Item sem nome'}
+                                                </h3>
+                                                <div class="menu-item-pill price-highlight bg-primary-dynamic/10 text-primary-dynamic border border-primary-dynamic/20">
+                                                    <span class="font-bold">${item.Preço || 'Consulte'}</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <p class="text-gray-600 leading-snug text-sm mb-3 line-clamp-3">
+                                                ${item.Descrição || ''}
+                                            </p>
+                                        </div>
+                                        
+                                        <div>
+                                            ${item.Classificação_Adicional && item.Classificação_Adicional.trim() !== '' ? `
+                                                <div class="flex flex-wrap gap-1 mb-2">
+                                                    ${item.Classificação_Adicional.split('/').map(tag => `
+                                                        <span class="menu-item-pill bg-secondary-dynamic/10 text-secondary-dynamic border border-secondary-dynamic/20">
+                                                            ${tag.trim()}
+                                                        </span>
+                                                    `).join('')}
+                                                </div>
+                                            ` : ''}
+                                            
+                                            ${item.Observações ? `
+                                                <p class="text-xs text-gray-500 italic border-t pt-2 mt-2">
+                                                    💡 ${item.Observações}
+                                                </p>
+                                            ` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </section>
+        `;
+        
+        cardapioContainer.innerHTML += secaoHtml;
+    });
+
+    document.getElementById('loading').style.display = 'none';
+    console.log('Renderização concluída');
+}
+
+
+
+
+
+
+// Event listeners
+document.addEventListener('DOMContentLoaded', function() {
+    
+    
+    
+    
+      // Adicionar evento de click nos logos para reload
+    const logoMobile = document.getElementById('logo-mobile');
+    const logoDesktop = document.getElementById('logo');
+    const logoTextMobile = document.getElementById('logo-text-mobile');
+
+    // Função para forçar reload e manter no topo
+    function recarregarEManterNoTopo(e) {
+        e.preventDefault(); // Previne o comportamento padrão
+        
+        // Adiciona um parâmetro à URL para forçar o navegador a ir para o topo
+        const separador = window.location.href.includes('?') ? '&' : '?';
+        const novaUrl = window.location.href.split('#')[0] + separador + 'scrollTop=0';
+        
+        // Redireciona para a nova URL, forçando um reload
+        window.location.href = novaUrl;
+    }
+
+    // Adicionar event listeners aos logos para recarregar e manter no topo
+    if (logoMobile) {
+        logoMobile.addEventListener('click', recarregarEManterNoTopo);
+        logoMobile.style.cursor = 'pointer';
+    }
+
+    if (logoDesktop) {
+        logoDesktop.addEventListener('click', recarregarEManterNoTopo);
+        logoDesktop.style.cursor = 'pointer';
+    }
+
+    if (logoTextMobile) {
+        logoTextMobile.addEventListener('click', recarregarEManterNoTopo);
+        logoTextMobile.style.cursor = 'pointer';
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // Botões de busca
+    document.getElementById('search-btn-mobile').addEventListener('click', abrirBusca);
+    document.getElementById('search-btn-desktop').addEventListener('click', abrirBusca);
+    
+    // Fechar busca
+    document.getElementById('close-search').addEventListener('click', fecharBusca);
+    document.getElementById('search-overlay').addEventListener('click', function(e) {
+        if (e.target === this) {
+            fecharBusca();
+        }
+    });
+
+    // Campo de busca
+    document.getElementById('search-input').addEventListener('input', function(e) {
+        const termo = e.target.value.trim();
+        
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            realizarBusca(termo);
+        }, 300);
+    });
+
+    // Tecla ESC para fechar busca
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            fecharBusca();
+        }
+    });
+
+    // Filtros desktop
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('filtro-btn')) {
+            document.querySelectorAll('.filtro-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-primary-dynamic', 'text-white');
+                btn.classList.add('bg-gray-100', 'text-gray-700');
+            });
+            
+            e.target.classList.add('active', 'bg-primary-dynamic', 'text-white');
+            e.target.classList.remove('bg-gray-100', 'text-gray-700');
+            
+            filtrarPorCategoria(e.target.dataset.categoria);
+        }
+    });
+
+    // Filtros scroll horizontal mobile
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('category-item')) {
+            document.querySelectorAll('.category-item').forEach(btn => {
+                btn.classList.remove('active', 'bg-primary-dynamic', 'text-white');
+                btn.classList.add('bg-gray-100', 'text-gray-700');
+            });
+            
+            e.target.classList.add('active', 'bg-primary-dynamic', 'text-white');
+            e.target.classList.remove('bg-gray-100', 'text-gray-700');
+            
+            // Scroll suave para centralizar o item ativo
+            const categoryScroll = document.getElementById('category-scroll');
+            const itemLeft = e.target.offsetLeft;
+            const itemWidth = e.target.offsetWidth;
+            const containerWidth = categoryScroll.offsetWidth;
+            
+            const targetScroll = itemLeft - (containerWidth / 2) + (itemWidth / 2);
+            
+            categoryScroll.scrollTo({
+                left: Math.max(0, targetScroll),
+                behavior: 'smooth'
+            });
+            
+            filtrarPorCategoria(e.target.dataset.categoria);
+        }
+    });
+
+    carregarDados();
+});
+
+function filtrarPorCategoria(categoria) {
+    // Em vez de ocultar seções, navegamos para a âncora correspondente
+    if (!categoria) {
+        // Se não tem categoria, volta ao topo
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+        return;
+    }
+    
+    // Encontrar a seção correspondente à categoria
+    const targetId = `categoria-${categoria.toLowerCase().replace(/\s+/g, '-')}`;
+    const targetSection = document.getElementById(targetId);
+    
+    if (targetSection) {
+        // Calcular offset do cabeçalho unificado
+        const headerOffset = document.getElementById('unified-header').offsetHeight;
+        
+        // Navegar para a seção com offset
+        window.scrollTo({
+            top: targetSection.offsetTop - headerOffset - 20,
+            behavior: 'smooth'
+        });
+        
+        // Atualizar URL sem recarregar a página
+        history.pushState(null, null, `#${targetId}`);
+    }
+}
+
+    </script>
+    
+    <!-- Script para centralizar o item do menu durante o scroll (estilo iFood com navegação por âncoras) -->
+    <script>
+        // Função para centralizar o item do menu mobile ao fazer scroll (comportamento iFood)
+        function setupScrollCentralization() {
+            const categoryMenu = document.getElementById('category-scroll');
+            const categoryItems = document.querySelectorAll('.category-item');
+            
+            // Verificar se existe o menu de categorias
+            if (!categoryMenu || categoryItems.length === 0) return;
+            
+            // Coletar IDs das seções de categoria e configurar navegação por âncoras
+            let sections = [];
+            categoryItems.forEach(item => {
+                const targetId = item.getAttribute('data-target');
+                if (targetId) {
+                    const section = document.getElementById(targetId);
+                    if (section) {
+                        // Configurar âncora de navegação
+                        item.href = `#${targetId}`;
+                        
+                        // Adicionar ao array de seções para rastreamento
+                        sections.push({
+                            id: targetId,
+                            menuItem: item,
+                            section: section,
+                            top: 0, // Será calculado depois
+                            bottom: 0 // Será calculado depois
+                        });
+                    }
+                }
+            });
+            
+            // Função otimizada para atualizar as posições das seções durante o scroll
+            function atualizarPosicoesSecoes() {
+                // Atualizar as posições absolutas de cada seção no documento
+                sections.forEach(secInfo => {
+                    if (!secInfo.section) return;
+                    
+                    const rect = secInfo.section.getBoundingClientRect();
+                    
+                    // Converter posições relativas à viewport para posições absolutas no documento
+                    secInfo.top = window.scrollY + rect.top;
+                    secInfo.bottom = window.scrollY + rect.bottom;
+                    secInfo.height = rect.height;
+                    
+                    // Guardar também as posições relativas para cálculos mais precisos
+                    secInfo.topRelative = rect.top;
+                    secInfo.bottomRelative = rect.bottom;
+                });
+                
+                // Ordenar seções do topo para o fim da página para navegação consistente
+                sections.sort((a, b) => a.top - b.top);
+            }
+            
+            // Função para centralizar item do menu com animação suave
+            function centralizarItemMenu(menuItem, comportamento = 'smooth') {
+                if (!categoryMenu || !menuItem) return;
+                
+                const menuRect = categoryMenu.getBoundingClientRect();
+                const itemRect = menuItem.getBoundingClientRect();
+                
+                // Calcular o deslocamento para centralizar o item
+                const menuCenterX = menuRect.width / 2;
+                
+                // Posição do item em relação ao menu de categorias (não ao viewport)
+                // Usar offsetLeft para posicionamento correto em relação ao container
+                let targetScrollLeft = menuItem.offsetLeft - menuCenterX + (itemRect.width / 2);
+                
+                // Garantir que não ultrapasse os limites
+                targetScrollLeft = Math.max(0, Math.min(targetScrollLeft, categoryMenu.scrollWidth - menuRect.width));
+                
+                // Aplicar scroll com comportamento especificado (suave ou instant)
+                categoryMenu.scrollTo({
+                    left: targetScrollLeft,
+                    behavior: comportamento
+                });
+                
+                // Adicionar classe visual para destacar o item centralizado
+                menuItem.classList.add('centered-item');
+                
+                // Console para debug
+                console.log(`Centralizando: ${menuItem.textContent} - scrollLeft: ${targetScrollLeft}`);
+            }
+            
+            // Função melhorada para encontrar a seção ativa com base no scroll atual (comportamento estilo iFood)
+            function encontrarSecaoAtiva() {
+                // Obter posição de scroll e dimensões da viewport
+                const scrollPosition = window.scrollY;
+                const viewportHeight = window.innerHeight;
+                
+                // Calcular tamanho do header fixo para compensar na detecção
+                const headerTotalHeight = document.getElementById('header').offsetHeight + 
+                                        document.getElementById('mobile-category-menu').offsetHeight;
+                
+                // O ponto de detecção é no centro da viewport, ajustado pelo header
+                // Isso garante que a categoria seja ativada quando estiver no centro da tela
+                const viewportCenter = scrollPosition + (viewportHeight / 2);
+                const detectionPoint = viewportCenter;
+                
+                // Se estiver no topo da página, selecionar a seção "Todos"
+                if (scrollPosition < 50) {
+                    return sections[0];
+                }
+                
+                // Verificar cada seção para ver qual está no ponto de detecção
+                for (const secInfo of sections) {
+                    if (detectionPoint >= secInfo.top && detectionPoint <= secInfo.bottom) {
+                        return secInfo;
+                    }
+                }
+                
+                // Se nenhuma seção for encontrada, encontrar a mais próxima do ponto de detecção
+                let closest = sections[0];
+                let closestDistance = Infinity;
+                
+                sections.forEach(secInfo => {
+                    // Se a seção está abaixo do ponto de detecção, calcular distância até o topo da seção
+                    if (secInfo.top > detectionPoint) {
+                        const distance = secInfo.top - detectionPoint;
+                        if (distance < closestDistance) {
+                            closestDistance = distance;
+                            closest = secInfo;
+                        }
+                    }
+                    // Se a seção está acima do ponto de detecção, calcular distância até o final da seção
+                    else if (secInfo.bottom < detectionPoint) {
+                        const distance = detectionPoint - secInfo.bottom;
+                        if (distance < closestDistance) {
+                            closestDistance = distance;
+                            closest = secInfo;
+                        }
+                    }
+                });
+                
+                return closest;
+            }
+            
+            // Função principal aprimorada para controlar o scroll e atualizar o menu (comportamento iFood)
+            function handleScroll() {
+                // Atualizar as posições das seções a cada scroll
+                atualizarPosicoesSecoes();
+                
+                // Encontrar a seção ativa baseada na posição do scroll
+                const secaoAtiva = encontrarSecaoAtiva();
+                
+                if (secaoAtiva && secaoAtiva.menuItem) {
+                    // Variante anterior ativa para comparar mudanças
+                    const previousActive = document.querySelector('.category-item.active');
+                    const isNewActive = previousActive !== secaoAtiva.menuItem;
+                    
+                    // Remover classe de centralização de todos os itens
+                    categoryItems.forEach(item => item.classList.remove('centered-item'));
+                    
+                    // Atualizar classe ativa apenas se mudou
+                    if (isNewActive) {
+                        // Remover classe ativa de todos os itens
+                        categoryItems.forEach(item => item.classList.remove('active'));
+                        
+                        // Adicionar classe ativa ao item atual
+                        secaoAtiva.menuItem.classList.add('active');
+                        
+                        // Centralizar o item do menu no modo suave quando há mudança de categoria
+                        centralizarItemMenu(secaoAtiva.menuItem, 'smooth');
+                        
+                        // Atualizar a URL sem recarregar a página (para manter histórico de navegação)
+                        const targetId = secaoAtiva.id;
+                        if (targetId) {
+                            history.replaceState(null, null, `#${targetId}`);
+                        }
+                        
+                        console.log(`Seção ativa alterada para: ${secaoAtiva.menuItem.textContent}`);
+                    } else {
+                        // Mesmo quando não muda a categoria, continuamos centralizando
+                        // o item durante o scroll para garantir um comportamento tipo iFood
+                        centralizarItemMenu(secaoAtiva.menuItem, 'smooth');
+                    }
+                }
+            }
+            
+            // Configurar a detecção de scroll otimizada para garantir centralização suave durante o scroll
+            let lastScrollTime = 0;
+            const scrollThrottle = 50; // milisegundos entre atualizações (reduzido para maior suavidade)
+            
+            window.addEventListener('scroll', function(e) {
+                const now = Date.now();
+                
+                // Usar throttling para limitar o número de atualizações
+                if (now - lastScrollTime >= scrollThrottle) {
+                    // Usar requestAnimationFrame para sincronizar com o ciclo de renderização
+                    window.requestAnimationFrame(function() {
+                        handleScroll();
+                    });
+                    
+                    lastScrollTime = now;
+                }
+            }, { passive: true });
+            
+            // Verificar se há um hash na URL ao carregar a página para navegação direta
+            window.addEventListener('load', function() {
+                if (window.location.hash) {
+                    const targetId = window.location.hash.substring(1);
+                    const targetSection = document.getElementById(targetId);
+                    if (targetSection) {
+                        const targetMenuItem = document.querySelector(`.category-item[data-target="${targetId}"]`);
+                        if (targetMenuItem) {
+                            // Remover classe ativa de todos os itens
+                            categoryItems.forEach(item => item.classList.remove('active'));
+                            // Adicionar classe ativa ao item alvo
+                            targetMenuItem.classList.add('active');
+                            // Centralizar item no menu
+                            centralizarItemMenu(targetMenuItem);
+                            
+                            // Scroll para a seção com offset após um pequeno atraso
+                            setTimeout(() => {
+                                const headerOffset = document.getElementById('header').offsetHeight + 
+                                                document.getElementById('mobile-category-menu').offsetHeight;
+                                const elementPosition = targetSection.getBoundingClientRect().top;
+                                const offsetPosition = elementPosition + window.pageYOffset - headerOffset - 20;
+                                window.scrollTo({
+                                    top: offsetPosition,
+                                    behavior: 'smooth'
+                                });
+                            }, 300);
+                        }
+                    }
+                }
+            });
+            
+            // Inicializar as posições das seções e configurar estado inicial
+            window.addEventListener('load', function() {
+                setTimeout(() => {
+                    atualizarPosicoesSecoes();
+                    handleScroll();
+                }, 500);
+            });
+            
+            // Adicionar event listeners para os cliques nos itens do menu
+            categoryItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    // Impedir comportamento padrão para controlar a navegação manualmente
+                    e.preventDefault();
+                    
+                    // Remover classe ativa de todos os itens
+                    categoryItems.forEach(item => item.classList.remove('active'));
+                    
+                    // Adicionar classe ativa a este item
+                    this.classList.add('active');
+                    
+                    // Centralizar o item imediatamente
+                    centralizarItemMenu(this);
+                    
+                    // Navegação para a seção correspondente
+                    const targetId = this.getAttribute('data-target');
+                    if (targetId) {
+                        const targetSection = document.getElementById(targetId);
+                        if (targetSection) {
+                            // Calcular posição com offset para o header
+                            const headerOffset = document.getElementById('header').offsetHeight + 
+                                                document.getElementById('mobile-category-menu').offsetHeight;
+                            const elementPosition = targetSection.getBoundingClientRect().top;
+                            const offsetPosition = elementPosition + window.pageYOffset - headerOffset - 20;
+                            
+                            // Scroll suave para a posição
+                            window.scrollTo({
+                                top: offsetPosition,
+                                behavior: 'smooth'
+                            });
+                            
+                            // Atualizar URL sem recarregar a página (para manter estado da âncora)
+                            history.pushState(null, null, `#${targetId}`);
+                        }
+                    }
+                    
+                    // Pequeno atraso para centralizar novamente após o scroll para a seção
+                    setTimeout(() => {
+                        centralizarItemMenu(this);
+                    }, 600);
+                });
+            });
+            
+            // Inicialização imediata
+            atualizarPosicoesSecoes();
+            handleScroll();
+        }
+        
+        // Executar a configuração após o carregamento do cardápio
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar se o cardápio já foi carregado
+            if (document.querySelector('#cardapio .categoria-secao')) {
+                setupScrollCentralization();
+            } else {
+                // Se não, esperar até que o cardápio seja renderizado
+                const observer = new MutationObserver(function(mutations, observer) {
+                    if (document.querySelector('#cardapio .categoria-secao')) {
+                        setupScrollCentralization();
+                        observer.disconnect();
+                    }
+                });
+                
+                observer.observe(document.body, {
+                    childList: true,
+                    subtree: true
+                });
+            }
+        });
+    </script>
+    <script>
+        // Navegação de scroll vertical para menu desktop
+        // Autor: Dante Testa - https://dantetesta.com.br
+        // Esta função sincroniza o menu de filtros desktop com o scroll vertical das seções do cardápio.
+        // Função removida pois agora o menu desktop é o mesmo que o mobile
+function setupDesktopScrollNavigation() {
+    // Removida pois agora usamos o mesmo menu para desktop e mobile
+    console.log('Menu desktop agora usa o mesmo comportamento do mobile');
+}
+
+        // Aguarda o cardápio ser renderizado antes de inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            if (document.querySelector('.categoria-secao')) {
+                setupDesktopScrollNavigation();
+            } else {
+                const observer = new MutationObserver((mutations, obs) => {
+                    if (document.querySelector('.categoria-secao')) {
+                        setupDesktopScrollNavigation();
+                        obs.disconnect();
+                    }
+                });
+                observer.observe(document.body, { childList: true, subtree: true });
+            }
+        });
+    </script>
+</body>
+</html>
